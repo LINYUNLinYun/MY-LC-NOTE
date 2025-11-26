@@ -5,4 +5,4 @@ project(CTEST_TEST_LOAD)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MyProject 27_remove_element.cpp)
+add_executable(MyProject "C++/59_generate_spiral_matrix.cpp")
