@@ -5,4 +5,4 @@ project(CTEST_TEST_LOAD)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MyProject "C++/203_remove_linked_lists_element.cpp")
+add_executable(MyProject "C++/707_design_linked_list.cpp")
