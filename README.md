@@ -22,3 +22,10 @@ struct ListNode {
 
 ## 59_generate_spiral_matrix.cpp
 注意get_direction要首尾相连，检查的时候可以注意 一下，rdlur循环。然后没了，没什么需要注意的
+
+## 707_design_linked_list.cpp
+这道题需要注意的是单链表的数据结构：
+1. 在最开头有一个哨兵节点作为头节点。
+`sentinel -> 下标0 -> 下标1 -> ... -> 下标n-1 -> nullptr` 
+2. 需要有一个数n来保存当前的节点个数，方便做越界判断等。
+3. 在做题的时候只需要实现一个addAtIndex函数，也就是在下标index前插入的函数，然后就可以通过该函数在head和tail进行插入。

@@ -16,7 +16,8 @@ public:
 
     //单链表
     MyLinkedList() {
-        // head = new ListNode(-1);
+        //哨兵节点，并无实际值，所以给-1
+        head = new ListNode(-1);
         n = 0;
     }
     
@@ -26,33 +27,21 @@ public:
         }
         ListNode* temp = head;
         int i = 0;
-        while(i<index - 1){
-            if(temp->next != nullptr){
-                temp = temp->next;
-                i++;
-            }
-            else{
-                break;
-            }
+        while(i<index + 1){
+            temp = temp->next;
+            i++;
         }
+        return temp->val;
     }
     
     void addAtHead(int val) {
-        ListNode* temp = new ListNode(val);
-        temp->next = head;
-        head = temp;
-        n++;
+        addAtIndex(0, val);
+        return;
     }
     
     void addAtTail(int val) {
-        ListNode* temp = head;
-
-        while(temp->next != nullptr){
-            temp = temp->next;
-        }
-
-        temp->next = new ListNode(val);
-        n++;
+        addAtIndex(n, val);
+        return;
     }
     
     void addAtIndex(int index, int val) {
@@ -61,43 +50,30 @@ public:
         }
         ListNode* temp = head;
         int i = 0;
-        while(i<index - 1){
-            if(temp->next != nullptr){
-                temp = temp->next;
-                i++;
-            }
-            else{
-                break;
-            }
+        while(i<index){
+            temp = temp->next;
+            i++;
         }
-        if(i == index -1){
-            ListNode* indexNode = new ListNode(val);
-            indexNode->next = temp->next;
-            temp->next = indexNode;
-        }
-        n--;
+        ListNode* newNode = new ListNode(val);
+        newNode->next = temp->next;
+        temp->next = newNode;
+
+        n++;
         return;
         
     }
     
     void deleteAtIndex(int index) {
-        if(index < 0 || index >= n){
+        if(index < 0 || index >= n || n == 0){
             return;
         }
         ListNode* temp = head;
         int i = 0;
-        while(i<index - 1){
-            if(temp->next != nullptr){
-                temp = temp->next;
-                i++;
-            }
-            else{
-                break;
-            }
+        while(i<index){
+            temp = temp->next;
+            i++;
         }
-        if(i == index - 1 && temp->next != nullptr){
-            temp->next = temp->next->next;
-        }
+        temp->next = temp->next->next;
         n--;
         return;
     }
