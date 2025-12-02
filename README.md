@@ -23,6 +23,10 @@ struct ListNode {
 ## 59_generate_spiral_matrix.cpp
 注意get_direction要首尾相连，检查的时候可以注意 一下，rdlur循环。然后没了，没什么需要注意的
 
+## 206_reverse_linked_lists.cpp
+我采用的做法是迭代，用变量存储上一个和下一个节点，然后交换就可以了；
+**比较需要注意的地方大概是，我采用了currNode为空时跳出循环，这本身没任何问题，问题出在我选择了返回currNode作为结果。你知道问题出在哪里了吗？——对的，跳出循环的时候curr已经是空的了，这么返回的一定是空指针，所以应该返回curr的上一个结果pre**
+
 ## 707_design_linked_list.cpp
 这道题需要注意的是单链表的数据结构：
 1. 在最开头有一个哨兵节点作为头节点。
