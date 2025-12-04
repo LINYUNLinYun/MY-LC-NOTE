@@ -24,6 +24,7 @@ struct ListNode {
 我的做法是：创建一个dummy node（就不需要对头节点进行特殊的判断了），先遍历一遍list，记录长度的同时，把node ptr存在容器里。后续只需要对容器的第length - n个结点后的进行删除即可。
 时间复杂度和空间复杂度都是O(L)
 还有个很妙的做法，遍历的过程中将node入栈，完事后第n个出栈的node就是要删除的节点，此时的栈顶node就是它的前驱节点，就可以删除了
+还有个最妙的做法，双指针，first比second超前n个节点，这样first到末尾的时候，second刚刚好就是倒数第n个，如此一来就解决了
 
 ## 59_generate_spiral_matrix.cpp
 注意get_direction要首尾相连，检查的时候可以注意 一下，rdlur循环。然后没了，没什么需要注意的
