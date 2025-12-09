@@ -5,4 +5,4 @@ project(CTEST_TEST_LOAD)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MyProject "C++/24_swap_nodes_in_pairs.cpp")
+add_executable(MyProject "C++/349_intersection_of_two_arrays.cpp")
