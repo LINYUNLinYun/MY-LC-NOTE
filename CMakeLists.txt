@@ -5,4 +5,4 @@ project(CTEST_TEST_LOAD)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MyProject "C++/349_intersection_of_two_arrays.cpp")
+add_executable(MyProject "C++/202_happy_number.cpp")
