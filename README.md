@@ -76,6 +76,11 @@ for(int i = 0;i<n;i++){
 还有个很妙的做法，遍历的过程中将node入栈，完事后第n个出栈的node就是要删除的节点，此时的栈顶node就是它的前驱节点，就可以删除了
 还有个最妙的做法，双指针，first比second超前n个节点，这样first到末尾的时候，second刚刚好就是倒数第n个，如此一来就解决了
 
+## 28_find_the_index_of_the_first_occurrence_in_a_string
+方法一：暴力法，但是这个没什么特别的所以我们额外拿出一天来研究KMP算法
+
+方法二：KMP。
+
 ## 59_generate_spiral_matrix.cpp
 注意get_direction要首尾相连，检查的时候可以注意 一下，rdlur循环。然后没了，没什么需要注意的
 
