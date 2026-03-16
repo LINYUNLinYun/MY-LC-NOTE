@@ -149,3 +149,6 @@ $$
 `sentinel -> 下标0 -> 下标1 -> ... -> 下标n-1 -> nullptr` 
 2. 需要有一个数n来保存当前的节点个数，方便做越界判断等。
 3. 在做题的时候只需要实现一个addAtIndex函数，也就是在下标index前插入的函数，然后就可以通过该函数在head和tail进行插入。
+
+## 1047_remove_all_adjacent_duplicates_in_string.cpp
+这道题不难，但是最优解是利用string类自身的栈特性解决，即通过pop_back和push_back来实现
