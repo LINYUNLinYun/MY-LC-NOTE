@@ -26,6 +26,7 @@ struct TreeNode {
  */
 class Solution {
 public:
+    // 中序遍历
     void inOrderTraversal(TreeNode* root, vector<int>& res){
         if(root == nullptr){
             res.push_back(0);
@@ -42,19 +43,42 @@ public:
         inOrderTraversal(root->right,res);
         return;
     }   
-    bool isSymmetric(TreeNode* root) {
-        // 中序遍历的次序应该是对称的
-        vector<int> order;
-        inOrderTraversal(root,order);
-        int n = order.size();
-        bool isSymmetric = true;
-        for(int i = 0;i<n/2;i++){
-            if(order[i]!=order[n-i-1]){
-                isSymmetric = false;
+    
+    static void get_depth(TreeNode* root, unordered_map<int, vector<int>>& node_depth, int depth = 0){
+        if(root == nullptr){
+            node_depth[depth].push_back(INT_MIN);
+            return;
+        }
+        node_depth[depth].push_back(root->val);
+        get_depth(root->left, node_depth, depth+1);
+        get_depth(root->right, node_depth, depth+1);
+    }
+
+    bool isSymVec(const vector<int> input){
+        bool res = true;
+        int n = input.size();
+        for(int  i = 0;i<n/2;i++){
+            if(input[i]!=input[n-i-1]){
+                res = false;
                 break;
             }
         }
-        return isSymmetric;
+        return res;
+    }
+
+    bool isSymmetric(TreeNode* root) {
+        // vector<pair<int, int>> node_depth;
+        unordered_map<int, vector<int>> val_map;
+        get_depth(root, val_map);
+        bool res = true;
+        for(auto m : val_map){
+            if(!isSymVec(m.second)){
+                res = false;
+                break;
+            }
+        }
+        return res;
+
     }
 };
 
