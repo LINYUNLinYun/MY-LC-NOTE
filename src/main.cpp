@@ -20,6 +20,10 @@ struct TreeNode {
 
 int main(int argc, char const *argv[]) {
 	// Solution s;
+    string s;
+    s.push_back('0'+6);
+    s+=48;
+    cout<<s<<endl;
 	cout << "hello wrold" << endl;
 	return 0;
 }
