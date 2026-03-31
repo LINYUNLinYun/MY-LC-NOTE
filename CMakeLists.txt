@@ -5,5 +5,5 @@ project(CTEST_TEST_LOAD)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# add_executable(MyProject "C++/459_repeated_substring_pattern.cpp")
-add_executable(MyProject "src/main.cpp")
+add_executable(MyProject "C++/404_sum_of_left_leaves.cpp")
+# add_executable(MyProject "src/main.cpp")
