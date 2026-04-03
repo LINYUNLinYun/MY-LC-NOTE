@@ -87,6 +87,40 @@ for(int i = 0;i<n;i++){
 ## 59_generate_spiral_matrix.cpp
 注意get_direction要首尾相连，检查的时候可以注意 一下，rdlur循环。然后没了，没什么需要注意的
 
+## 98_validate_binary_search_tree
+第一遍写，错了。我的写法：
+```C++
+bool isValidBST(TreeNode* root) {
+        bool res = true;
+        if(root){
+            if(root->left && root->left->val >= root->val){
+                res = false;
+                return res;
+            }else{
+                res = isValidBST(root->left);
+            }
+            if(root->right && root->right->val <= root->val){
+                res = false;
+                return res;
+            }else{
+                res = isValidBST(root->right);
+            }
+        }else{
+            return res;
+        }
+        return res;
+    }
+```
+错在这个么写其实只验证了当前的一个小子树是严格符合左儿子小于父节点，右儿子大于父节点，只确保了局部正确性，全局的树可能是错的；因此正确的写法应该是在递归之间传递全局信息。
+
+第二遍，对了……他妈的算法题也太恶心了。这一次我先尝试用pair来传递子树的上下界，如果有违法的我会把pair设置为{INT_MAX,INT_MIN}，如果合法的话就返回子树的最大值和最小值。这样子就可以在递归的过程中验证全局的正确性了……吗？由于树节点的值可能是INT_MAX或者INT_MIN，所以有些案例是过不了的，回炉重造！也很简单，我直接在函数参数加了个引用的bool变量来记录是否合法，完美解决只利用pair传递上下界可能出现的边界值问题了。
+
+或者也可以不加这个变量，学习官方题解，把边界设置为long long类型的LONG_MAX和LONG_MIN，这样就不会出现边界值问题了，
+
+但是官方的思路更好，我是真没没想到啊！！！！！！！！！！！！！！！！！！！！！！！！！：
+思路1：递归，传递上下界，验证全局正确性，但是它是自顶向下的，和我的一层一层往上传递最大最小值的思路不一样，感觉这个思路更妙，强烈推荐复盘学习
+思路2：中序遍历，二叉搜索树的中序遍历是一个递增序列，所以只要验证中序遍历的结果是递增的就行了，这个思路最简单。
+
 ## 101_symmetric_tree
 我的错误思路：刚开始随便瞄了眼，发现对称的树它的中序遍历序列是个回文序列即对称，于是就开始用这个方法写了。结果发现很bad有几个测试用例过不了，即使给叶子节点使用特殊的标记也依然存在某个除了根节点两边节点都只有一个子节点的树中序遍历完了是对称的。
 
@@ -201,6 +235,41 @@ $$
 这道题我用的是一个dfs获取深度，然后bfs获取最底层的第一个节点的值的方法，感觉有点麻烦了。
 
 官方题解是直接在dfs的过程中记录当前的最大深度和对应的节点值，这样就不需要两次遍历了，比较简单。可以试试。
+
+## 617_merge_two_binary_trees
+简单题，如果开新的树的话会很简单，一直递归就行；我选择原地修改一棵树，花了很久……看了下lc上讨论区，发现别人写的简洁多了，学习：
+```C++
+class Solution {
+public:
+    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+        if (root1 && root2) {
+            root1->val += root2->val;
+            root1->left = mergeTrees(root1->left, root2->left);
+            root1->right = mergeTrees(root1->right, root2->right);
+        }
+        return root1 ? root1 : root2;
+    }
+
+    //等价于
+    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+        if(root1 == nullptr && root2 == nullptr){
+            return nullptr;
+        }
+        else if(root1 && root2 == nullptr){
+            return root1;
+        }
+        else if(root1 == nullptr && root2){
+            return root2;
+        }
+        else{
+            root1->val += root2->val;
+            root1->left = mergeTrees(root1->left, root2->left);
+            root1->right = mergeTrees(root1->right, root2->right);
+            return root1;
+        }
+    }
+};
+```
 
 ## 654_maximum_binary_tree
 左右指针+递归秒了，和那个106题差不多。
