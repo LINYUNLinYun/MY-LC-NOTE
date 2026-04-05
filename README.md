@@ -118,7 +118,32 @@ bool isValidBST(TreeNode* root) {
 或者也可以不加这个变量，学习官方题解，把边界设置为long long类型的LONG_MAX和LONG_MIN，这样就不会出现边界值问题了，
 
 但是官方的思路更好，我是真没没想到啊！！！！！！！！！！！！！！！！！！！！！！！！！：
-思路1：递归，传递上下界，验证全局正确性，但是它是自顶向下的，和我的一层一层往上传递最大最小值的思路不一样，感觉这个思路更妙，强烈推荐复盘学习
+思路1：递归，传递上下界，验证全局正确性，但是它是自顶向下的，和我的一层一层往上传递最大最小值的思路不一样，感觉这个思路更妙，强烈推荐复盘学习，思路其实很简单但是很妙——自顶向下的好处是每一轮只用传递这个根节点带来的范围约束即可，也就是只需传递局部信息。因为自顶向下确保了，如果递归能走到这个位置说明前面的是对的了，保证了全局的正确性。
+
+反观我们的自底向上的做法，无论底下的错误发生与否，信息都要传递到根节点才知道，一点也不优雅。
+```C++
+class Solution {
+public:
+    bool helper(TreeNode* root, long long lower, long long upper){
+        if(root == nullptr){
+            return true;
+        }
+        if(root->val <= lower || root->val >= upper){
+            return false;
+        }
+        return helper(root->left, lower, root->val) && helper(root->right, root->val, upper);
+        
+
+    }
+    bool isValidBST(TreeNode* root) {
+        if(root == nullptr){
+            return false;
+        }
+        return helper(root, LONG_MIN, LONG_MAX);
+    }
+};
+```
+
 思路2：中序遍历，二叉搜索树的中序遍历是一个递增序列，所以只要验证中序遍历的结果是递增的就行了，这个思路最简单。
 
 ## 101_symmetric_tree
@@ -235,6 +260,53 @@ $$
 这道题我用的是一个dfs获取深度，然后bfs获取最底层的第一个节点的值的方法，感觉有点麻烦了。
 
 官方题解是直接在dfs的过程中记录当前的最大深度和对应的节点值，这样就不需要两次遍历了，比较简单。可以试试。
+
+## 530_minimum_absolute_difference_in_bst
+我的做法，我又又又想复杂了，**这题用中序遍历好像能秒（O(N)）**。我这个做法的复杂度是O(NlogN)，因为每个节点都要调用一次getEdgeNodeVal函数，而这个函数的复杂度是O(logN)。
+```C++
+int getEdgeNodeVal(TreeNode* root, int direction) {
+        if(root == nullptr){
+            return INT_MAX;
+        }
+        if(direction){
+            while(root->right){
+                root = root->right;
+            }
+            return root->val;
+        }
+        else{
+            while(root->left){
+                root = root->left;
+            }
+            return root->val;
+        }
+    }
+    int helper(TreeNode* root){
+        int abs_res = INT_MAX;
+        if(root == nullptr){
+            return abs_res;
+        }
+        if(root->left){
+            int left_max = getEdgeNodeVal(root->left, 1);
+            left_max = abs(left_max - root->val);
+            abs_res = left_max < abs_res ? left_max : abs_res;
+        }
+        if(root->right){
+            int right_min = getEdgeNodeVal(root->right, 0);
+            right_min = abs(right_min - root->val);
+            abs_res = right_min < abs_res ? right_min : abs_res;
+        }
+        int left_res = helper(root->left);
+        int right_res = helper(root->right);
+        abs_res = left_res < abs_res ? left_res : abs_res;
+        abs_res = right_res < abs_res ? right_res : abs_res;
+        return abs_res;
+    }
+    int getMinimumDifference(TreeNode* root) {
+        // 如果bst的某个根节点存在最小差值 一定是它的左右子树的最右/左节点产生
+        return helper(root);
+    }
+```
 
 ## 617_merge_two_binary_trees
 简单题，如果开新的树的话会很简单，一直递归就行；我选择原地修改一棵树，花了很久……看了下lc上讨论区，发现别人写的简洁多了，学习：
