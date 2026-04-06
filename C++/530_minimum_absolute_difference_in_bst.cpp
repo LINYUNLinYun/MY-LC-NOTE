@@ -57,6 +57,30 @@ public:
         abs_res = right_res < abs_res ? right_res : abs_res;
         return abs_res;
     }
+
+    // 第二种做法  基于中序遍历
+    void inorder(TreeNode* root, vector<int> &nums){
+        if(root == nullptr){
+            return;
+        }
+        inorder(root->left, nums);
+        nums.push_back(root->val);
+        inorder(root->right, nums);
+        return;
+    }
+
+    int min_abs(TreeNode* root){
+        vector<int> temp;
+        inorder(root, temp);
+        int res = INT_MAX;
+        for(int i = 0;i<temp.size();i++){
+            if(i!=0){
+                res = min(res, abs(temp[i-1] - temp[i]));
+            }
+        }
+        return res;
+    }
+
     int getMinimumDifference(TreeNode* root) {
         // 如果bst的某个根节点存在最小差值 一定是它的左右子树的最右/左节点产生
         return helper(root);

@@ -234,6 +234,9 @@ $$
 ## 232_implement_queue_using_stack
 这题没什么难的就是难在怎么用两个栈构造一个队列上想清楚就很简单了。一个尾栈负责记录push，要pop的时候在全推到另一个头栈，再进行pop就可以了。
 
+## 236_lowest_common_ancestor_of_a_binary_tree
+简单题 可以学习下官方题解的做法。
+
 ## 239_sliding_window_maximum.cpp
 好像是我的第一道hard题，第一遍用的思路是双重循环暴力枚举，结果超时间；然后改进了下对出和入的元素以及最大值做一个比较进行剪枝但依旧过不了某些用例；最后看题解用了优先队列priority_queue，最大堆，轻松解决了……没啥好说的，学习人家的做法就行了
 
