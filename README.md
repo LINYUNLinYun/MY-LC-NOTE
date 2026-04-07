@@ -349,6 +349,9 @@ public:
 ## 654_maximum_binary_tree
 左右指针+递归秒了，和那个106题差不多。
 
+## 701_insert_into_a_binary_search_tree
+中等题？？感觉很简单。
+
 ## 707_design_linked_list.cpp
 这道题需要注意的是单链表的数据结构：
 1. 在最开头有一个哨兵节点作为头节点。
