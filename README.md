@@ -354,6 +354,10 @@ public:
 ## 654_maximum_binary_tree
 左右指针+递归秒了，和那个106题差不多。
 
+## 669_trim_a_binary_search_tree
+一道中等题。。。。没思路，试着用剪枝根节点的左右子树并递归写一下，发现很复杂，失败，明天再试；
+
+
 ## 701_insert_into_a_binary_search_tree
 中等题？？感觉很简单。
 
