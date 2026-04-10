@@ -355,8 +355,36 @@ public:
 左右指针+递归秒了，和那个106题差不多。
 
 ## 669_trim_a_binary_search_tree
-一道中等题。。。。没思路，试着用剪枝根节点的左右子树并递归写一下，发现很复杂，失败，明天再试；
+一道中等题。。。。没思路，试着用剪枝根节点的左右子树并递归写一下，发现很复杂，失败，~~明天再试~~下午想了想还是今天就试试吧！看了下官方题解，非常的简单，还真是到中等题……递归几行就写完了：
+```C++
+class Solution {
+public:
+    TreeNode* trimBST(TreeNode* root, int low, int high) {
+        // 空返回空
+        if (root == nullptr) {
+            return nullptr;
+        }
+        if (root->val < low) {
+            // 说明根节点和左子树都不合法，对右树递归
+            return trimBST(root->right, low, high);
+        } else if (root->val > high) {
+            // 说明根节点和右子树都不合法，对左树递归
+            return trimBST(root->left, low, high);
+        } else {
+            // 说明根节点合法，对左右子树递归
+            root->left = trimBST(root->left, low, high);
+            root->right = trimBST(root->right, low, high);
+            return root;
+        }
+    }
+};
+``` 
+所以为什么这道题这么简单呢？对于修剪一棵树来说，根节点只有三种情况：
+1. 根节点小于low，那么根节点和左子树可以扔掉，我们返回右子树的合法结果，所以对右子树继续递归。
+2. 根节点大于high同理。
+3. 精髓就在根节点合法。对于前两种情况，我们总是遇到根节点太小or太大，那么由于bst的性质，递归倾向于往不那么小/大的方向走，也就是说这么走下去一定能遇到一个合法的根节点（搜索树收敛到这个范围里）或者遇到空节点。那么接着对合法的节点的左右子树继续递归修剪就好了。
 
+可以想象一下三角形的的树，low和high的范围构成一个狭窄的长方形。最后返回的root是这个范围内的最高的节点。
 
 ## 701_insert_into_a_binary_search_tree
 中等题？？感觉很简单。
