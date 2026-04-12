@@ -87,6 +87,35 @@ for(int i = 0;i<n;i++){
 ## 59_generate_spiral_matrix.cpp
 注意get_direction要首尾相连，检查的时候可以注意 一下，rdlur循环。然后没了，没什么需要注意的
 
+## 77_combinations
+我的做法是：递归+回溯，感觉没什么特别的，主要是要注意回溯的时候要把之前添加的元素删除掉。我用循环递归的起点。
+
+官方题解依旧比我的更好：直接通过栈控制当前答案的深度，递归的起点就是当前元素的下一个元素，这样就不需要在递归函数里进行循环了。
+```C++
+class Solution {
+public:
+    vector<int> temp;
+    vector<vector<int>> ans;
+
+    void dfs(int cur, int n, int k) {
+        // ……
+        // 前面省略
+        // 考虑选择当前位置
+        temp.push_back(cur);
+        dfs(cur + 1, n, k);
+        temp.pop_back();
+        // 考虑不选择当前位置
+        dfs(cur + 1, n, k);
+    }
+
+    vector<vector<int>> combine(int n, int k) {
+        dfs(1, n, k);
+        return ans;
+    }
+};
+
+```
+
 ## 98_validate_binary_search_tree
 第一遍写，错了。我的写法：
 ```C++
@@ -315,6 +344,13 @@ int getEdgeNodeVal(TreeNode* root, int direction) {
         return helper(root);
     }
 ```
+
+## 538_convert_bst_to_greater_tree
+我的做法是：先中序遍历获取一个递增的序列，然后从后往前遍历这个序列，依次累加并更新到树节点上。
+
+官方答案比我的更简单，是直接在中序遍历的过程中就把这个累加完成了。
+
+还有另一种做法，Morris遍历，可以实现O(1)空间复杂度的中序遍历，日后再说。
 
 ## 617_merge_two_binary_trees
 简单题，如果开新的树的话会很简单，一直递归就行；我选择原地修改一棵树，花了很久……看了下lc上讨论区，发现别人写的简洁多了，学习：
