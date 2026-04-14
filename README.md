@@ -70,6 +70,9 @@ for(int i = 0;i<n;i++){
 
 还有一个就是，四数之和竟然越界了然后要改用long类型去操作。
 
+## 17_letter_combinations_of_a_phone_number
+官方题解是维护了个哈希表，然后递归加循环。我是直接人工写表，然后递归。
+
 ## 19_remove_nth_node_from_end_of_list.cpp
 我的做法是：创建一个dummy node（就不需要对头节点进行特殊的判断了），先遍历一遍list，记录长度的同时，把node ptr存在容器里。后续只需要对容器的第length - n个结点后的进行删除即可。
 时间复杂度和空间复杂度都是O(L)
