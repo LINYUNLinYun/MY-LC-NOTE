@@ -328,6 +328,45 @@ $$
 ## 461_hamming_distance
 用异或更简单
 
+## 491_non_decreasing_subsequences
+我们的思路（经gpt完善后）如下。主要的改动点：path改为引用、去重检查在递归的过程中进行
+
+主要讲讲为什么去重检查要在递归的过程中进行，而不是在push答案的时候进行。因为如果在push答案的时候进行去重检查，等于每种情况都要遍历一遍，时间复杂度最坏是是O(2^N * N )，可以想象一个[1,2,...,15]你会发现每轮递归都是答案，而每个答案都要做一遍检查 。
+
+如果在递归的过程中进行去重检查（利用unordered_set或者其他的哈希方法），那么每种情况只需要检查一次，时间复杂度是O(2^N)，大大降低了时间复杂度。
+```C++
+class Solution {
+public:
+    void helper(vector<int>& nums, vector<int> &path, vector<vector<int>> &res, int start){
+        if(path.size()>=2){
+            res.push_back(path);
+            if(start == nums.size()){
+                return;
+            }
+        }
+        unordered_set<int> used;
+        for(int i = start;i<nums.size();i++){
+            // 不应该在push答案的时候再检查是否重复
+            if((!path.empty() && nums[i] < path.back()) || used.count(nums[i])){
+                continue;
+            }
+            used.insert(nums[i]);
+            path.push_back(nums[i]);
+            helper(nums,path,res,i+1);
+            path.pop_back();
+        }
+        return;
+    }
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> path;
+        helper(nums,path,res,0);
+        return res;
+
+    }
+};
+```
+
 ## 513_find_bottom_left_tree_value
 这道题我用的是一个dfs获取深度，然后bfs获取最底层的第一个节点的值的方法，感觉有点麻烦了。
 
