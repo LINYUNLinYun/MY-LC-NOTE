@@ -28,7 +28,28 @@ public:
         if(max_num > target){
             return false;
         }
+        // 
+        vector<vector<int>> dp(n, vector<int>(target + 1, 0));
 
+        // 边界
+        for(int i = 0;i<n;i++){
+            dp[i][0] = 1;
+        }
+        for(int j = 1;j<target+1;j++){
+            dp[0][j] = int(nums[0] == j);
+        }
+
+        for(int i = 1;i<n;i++){
+            for(int j = 1;j<target+1;j++){
+                if(nums[i] > j){
+                    dp[i][j] = dp[i-1][j];
+                }
+                else{
+                    dp[i][j] = dp[i-1][j] | dp[i-1][j - nums[i]];
+                }
+            }
+        }
+        return dp[n-1][target];
     }
 };
 int main(int argc, char const *argv[]) {
