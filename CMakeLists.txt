@@ -5,5 +5,5 @@ project(CTEST_TEST_LOAD)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(MyProject "C++/62_unique_paths.cpp")
+add_executable(MyProject "C++/karma_107.cpp")
 # add_executable(MyProject "src/main.cpp")
